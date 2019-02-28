@@ -49,7 +49,7 @@ type Header struct {
 	StatusCode int
 }
 
-// NewCache returns a cache backend off the provided VFS
+// NewVFSCache returns a cache backend off the provided VFS
 func NewVFSCache(fs vfs.VFS) Cache {
 	return &cache{fs: fs, stale: map[string]time.Time{}}
 }
@@ -90,7 +90,7 @@ func (c *cache) vfsWrite(path string, r io.Reader) error {
 	return nil
 }
 
-// Retrieve the Status and Headers for a given key path
+// Header retrieves the Status and Headers for a given key path
 func (c *cache) Header(key string) (Header, error) {
 	path := headerPrefix + formatPrefix + hashKey(key)
 	f, err := c.fs.Open(path)
